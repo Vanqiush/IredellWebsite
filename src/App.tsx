@@ -457,10 +457,16 @@ function ImageSlot({
   image?: string
 }) {
   const Icon = icon === 'map' ? Map : icon === 'file' ? FileText : ImageIcon
+  const imageSrc = image
+    ? image.startsWith('http')
+      ? image
+      : `${import.meta.env.BASE_URL}${image.replace(/^\/+/, '')}`
+    : undefined
+
   return (
-    <button className={`image-slot ${ratio} ${tone} ${image ? 'has-image' : ''}`} onClick={() => onOpen({ title, caption, image })} type="button">
-      {image ? (
-        <img src={image} alt={title} />
+    <button className={`image-slot ${ratio} ${tone} ${imageSrc ? 'has-image' : ''}`} onClick={() => onOpen({ title, caption, image: imageSrc })} type="button">
+      {imageSrc ? (
+        <img src={imageSrc} alt={title} />
       ) : (
         <>
           <span className="media-label">IMAGE SLOT</span>
